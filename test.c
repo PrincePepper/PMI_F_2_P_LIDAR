@@ -4,12 +4,12 @@
 #define STOPPER 0                                      /* Smaller than any datum */
 #define    MEDIAN_FILTER_SIZE    (13)
 
-uint16_t median_filter(uint16_t datum)
+int median_filter(uint16_t datum)
 {
     struct pair
     {
         struct pair   *point;                              /* Pointers forming list linked in sorted order */
-          value;                                   /* Values to sort */
+        int  value;                                   /* Values to sort */
     };
     static struct pair buffer[MEDIAN_FILTER_SIZE] = {0}; /* Buffer of nwidth pairs */
     static struct pair *datpoint = buffer;               /* Pointer into circular buffer of data */
@@ -20,7 +20,7 @@ uint16_t median_filter(uint16_t datum)
     struct pair *scan;                                   /* Pointer used to scan down the sorted list */
     struct pair *scanold;                                /* Previous value of scan */
     struct pair *median;                                 /* Pointer to median */
-    uint16_t i;
+    int i;
 
     if (datum == STOPPER)
     {
