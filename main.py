@@ -23,6 +23,7 @@ class Median_filter():
         if (1 + datpoint - buffer) >= self.STEP:
             datpoint = buffer
 
+
     def start(self):
         for i in range(self.SIZE):
             if self.STEP < 3:

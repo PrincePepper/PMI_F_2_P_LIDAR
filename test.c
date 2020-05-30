@@ -9,7 +9,7 @@ uint16_t median_filter(uint16_t datum)
     struct pair
     {
         struct pair   *point;                              /* Pointers forming list linked in sorted order */
-        uint16_t  value;                                   /* Values to sort */
+          value;                                   /* Values to sort */
     };
     static struct pair buffer[MEDIAN_FILTER_SIZE] = {0}; /* Buffer of nwidth pairs */
     static struct pair *datpoint = buffer;               /* Pointer into circular buffer of data */
