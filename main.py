@@ -1,6 +1,15 @@
 import time
-from math import *
-from tkinter import *
+import sys  # sys нужен для передачи argv в QApplication
+from PyQt5 import QtWidgets
+import file.py  # Это наш конвертированный файл дизайна
+
+
+class ExampleApp(QtWidgets.QMainWindow, file.Ui_MainWindow):
+    def __init__(self):
+        # Это здесь нужно для доступа к переменным, методам
+        # и т.д. в файле design.py
+        super().__init__()
+        self.setupUi(self)  # Это нужно для инициализации нашего дизайна
 
 
 class Median_filter:
