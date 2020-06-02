@@ -90,5 +90,5 @@ a = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 start_time = time.time()
 balance = Median_filter(a, 3, 3)
 bbb = balance.start()
-print(bbb,sep='\n')
+print(bbb, sep='\n')
 print((time.time() - start_time))
