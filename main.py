@@ -1,15 +1,5 @@
 import time
 import sys  # sys нужен для передачи argv в QApplication
-from PyQt5 import QtWidgets
-import file.py  # Это наш конвертированный файл дизайна
-
-
-class ExampleApp(QtWidgets.QMainWindow, file.Ui_MainWindow):
-    def __init__(self):
-        # Это здесь нужно для доступа к переменным, методам
-        # и т.д. в файле design.py
-        super().__init__()
-        self.setupUi(self)  # Это нужно для инициализации нашего дизайна
 
 
 class Median_filter:
@@ -96,7 +86,7 @@ all_files = fin.read().split()
 ccc = []
 for i in all_files:
     ccc.append(int(i))
-a = [20, 29, 45, 53, 7, 81]
+# a = [20, 29, 45, 53, 7, 81]
 start_time = time.time()
 balance = Median_filter(ccc, 3, 1)
 bbb = balance.start()
