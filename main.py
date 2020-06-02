@@ -77,7 +77,7 @@ class Median_filter:
                 self.middle_of_3()
             else:
                 self.middle_more_than_3()
-            return self.MASS
+        return self.MASS
 
 
 fin = open('input.txt', "r")
@@ -86,8 +86,9 @@ all_files = fin.read().split()
 ccc = []
 for i in all_files:
     ccc.append(int(i))
-# a = [20, 29, 45, 53, 7, 81]
+a = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 start_time = time.time()
-balance = Median_filter(ccc, 3, 1)
+balance = Median_filter(a, 3, 3)
 bbb = balance.start()
+print(bbb,sep='\n')
 print((time.time() - start_time))
