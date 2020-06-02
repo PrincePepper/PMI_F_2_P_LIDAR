@@ -109,7 +109,6 @@ class Median_filter:
 
 
 fin = open('input.txt', "r")
-
 all_files = fin.read().split()
 ccc = []
 for i in all_files:
