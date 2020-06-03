@@ -2,110 +2,93 @@ import time
 
 
 class Median_filter:
-    def __init__(self, __step: int):
-        self.LINE = 0
-        self.SIZE = 0
-        self.STEP = __step
-        self.__MASS = []
-        self.__MATRIX = []
-        self.MATRIX_NEW = []
-        self.__BUFFER = []
-        self.__aaa = 0
-        self.__count = 0
-        self.__size = 0
+    def __init__(self, _step: int):
+        self._matrix = []
+        self._mass = []
+        self._buffer = []
+        self.step = _step
+        self._selfaccess = 0
+        self._count = 0
+        self._size = 0
 
     @staticmethod
-    def max_element(__a, __b):
-        return __a if __a > __b else __b
-
-    @staticmethod
-    def min_element(__a, __b):
-        return __a if __a < __b else __b
-
-    def f_middle_element(self, __a, __b, __c):
-        return self.max_element(self.max_element(self.min_element(__a, __b), self.min_element(__a, __c)),
-                                self.min_element(__b, __c))
+    def f_middle_element(_a, _b, _c):
+        return max(max(min(_a, _b), min(_a, _c)), min(_b, _c))
 
     def middle_of_3(self, cheak: int):
-        __temp = 0
-        if self.__aaa == 0:
-            self.__MASS.append(cheak)
-            return self.__MASS[self.__aaa]
+        _temp = 0
+        _count = 0
+        if self._selfaccess == 0:
+            self._mass.append(cheak)
+            return self._mass[self._selfaccess]
         else:
-            for i in range(self.__aaa):
-                __temp = self.__MATRIX[i]
-                self.__MASS.append(__temp[self.__size - 1])
-            self.__MASS.append(cheak)
-            __count = 0
-            __aaa = 0
-            self.__BUFFER = [0] * self.STEP
-            for newVal in self.__MASS:
-                self.__BUFFER[__count] = newVal
-                if __aaa < 2:
-                    if __aaa == 0:
-                        __temp = newVal
-                    elif __aaa == 1:
-                        __temp = self.__BUFFER[__aaa] if self.__BUFFER[__aaa] >= self.__BUFFER[__aaa - 1] else \
-                            self.__BUFFER[
-                                __aaa - 1]
+            for i in range(self._selfaccess):
+                _temp = self._matrix[i]
+                self._mass.append(_temp[self._size - 1])
+            self._mass.append(cheak)
+            self._buffer = []
+            for newVal in self._mass:
+                if len(self._buffer) < 3:
+                    self._buffer.append(newVal)
+                    if _count == 0:
+                        _temp = newVal
+                    if _count == 1:
+                        _temp = self._buffer[1] if self._buffer[1] >= self._buffer[0] else self._buffer[0]
                 else:
-                    __temp = self.f_middle_element(self.__BUFFER[__count], self.__BUFFER[__count - 1],
-                                                   self.__BUFFER[__count - 2])
-                __aaa += 1
-                __count += 1
-                if __count >= self.STEP:
-                    __count = 0
-        return __temp
+                    self._buffer[_count] = newVal
+                    _temp = self.f_middle_element(self._buffer[0], self._buffer[1], self._buffer[2])
+                _count += 1
+                if _count == self.step:
+                    _count = 0
+        return _temp
 
     def middle_more_than_3(self, cheak: int):
-        __temp = 0
-        if self.__aaa == 0:
-            self.__MASS.append(cheak)
-            return self.__MASS[self.__aaa]
+        _temp = 0
+        _count = 0
+        if self._selfaccess == 0:
+            self._mass.append(cheak)
+            return self._mass[self._selfaccess]
         else:
-            for i in range(self.__aaa):
-                __temp = self.__MATRIX[i]
-                self.__MASS.append(__temp[self.__size - 1])
-            self.__MASS.append(cheak)
-            __count = 0
-            __aaa = 0
-            self.__BUFFER = []
-            for newVal in self.__MASS:
-                if __aaa < self.STEP:
-                    self.__BUFFER.append(newVal)
-                    __temp_s = sorted(self.__BUFFER)
-                    __temp = __temp_s[int((__aaa + 1) / 2)]
-                else:
-                    self.__BUFFER[__count] = newVal
-                    __temp_s = sorted(self.__BUFFER)
-                    __temp = __temp_s[int(self.STEP / 2)]
-                __aaa += 1
-                __count += 1
-                if __count >= self.STEP:
-                    __count = 0
-        return __temp
+            for i in range(self._selfaccess):
+                _temp = self._matrix[i]
+                self._mass.append(_temp[self._size - 1])
+            self._mass.append(cheak)
+            self._buffer = []
+            for newVal in self._mass:
+                if len(self._buffer) < self.step:
+                    self._buffer.append(newVal)
+                    _temp_s = sorted(self._buffer)
+                    _temp = _temp_s[int((_count + 1) / 2)]
+                if len(self._buffer) == self.step:
+                    self._buffer[_count] = newVal
+                    _temp_s = sorted(self._buffer)
+                    _temp = _temp_s[int((self.step + 1) / 2)]
+                _count += 1
+                if _count >= self.step:
+                    _count = 0
+        return _temp
 
     def update(self, line: list):
-        self.__MATRIX.append(line)
-        self.LINE = line
-        self.SIZE = len(self.LINE)
-        self.__size = 0
-        __temp = []
-        for n in self.LINE:
-            self.__MASS = []
-            self.__size += 1
-            if self.STEP < 3:
-                exit("\nLack of input")
-            if self.STEP == 3:
-                __temp.append(self.middle_of_3(n))
+        if self.step == 1:
+            return line
+        self._matrix.append(line)
+        self._size = 0
+        _temp = []
+        for n in line:
+            self._mass = []
+            self._size += 1
+            if self.step == 2:
+                pass
+            elif self.step == 3:
+                _temp.append(self.middle_of_3(n))
             else:
-                __temp.append(self.middle_more_than_3(n))
-        self.__aaa += 1
-        self.__count += 1
-        if self.__count >= self.STEP:
-            self.__count = 0
-        self.MATRIX_NEW.append(__temp)
-        return __temp
+                _temp.append(self.middle_more_than_3(n))
+
+        self._selfaccess += 1
+        self._count += 1
+        if self._count >= self.step:
+            self._count = 0
+        return _temp
 
 
 fin = open('input.txt', "r")
@@ -115,12 +98,12 @@ for i in all_files:
     ccc.append(int(i))
 
 a = [[10, 8, 30, 5],
-     [8, 7, 40, 3],
-     [11, 10, 20, -3],
-     [10, 15, 50, 2],
-     [12, -3, 30, 1]]
+     [10, 8, 40, 5],
+     [10, 8, 40, 5],
+     [10, 10, 40, 2],
+     [11, 10, 30, 1]]
 start_time = time.time()
-balance = Median_filter(5)
+balance = Median_filter(1)
 for i in a:
     print(balance.update(i))
 print((time.time() - start_time))
