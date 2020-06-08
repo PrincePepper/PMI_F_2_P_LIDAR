@@ -42,15 +42,12 @@ class Median_filter:
         return _temp  # Возвращает готовую последовательнсть в зависимости от вх. данных
 
 
-fin = open('input.txt', "r")
-all_files = fin.read().split("\n")
-
 a = [[10, 8, 30, 5],
      [8, 7, 40, 3],
      [11, 10, 20, -3],
      [10, 15, 50, 2],
      [12, -3, 30, 1]]
-balance = Median_filter(6)
+balance = Median_filter(5)
 for i in a:
     print(balance.update(i))
 
