@@ -3,6 +3,11 @@
 This is the median filter for Lidar that accepts strings as input. 
 
 ```one line input = one lidar snapshot.```
+### work with filter
+```
+balance = Median_filter(step,{True from the necessity})
+balance.update([10, 8, 30, 5])
+```
 
 ***The project was released for my University course***
 
